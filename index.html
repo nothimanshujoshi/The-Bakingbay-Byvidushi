@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Baking Bay | Bespoke Cake Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D241E;   /* Deep Cocoa */
+            --accent: #D4A373;    /* Golden Honey */
+            --bg: #FDF8F5;        /* Champagne Cream */
+            --pink: #F9EAE1;      /* Blush */
+            --white: #ffffff;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif { font-family: 'Bodoni+Moda', serif; font-weight: 800; }
+
+        /* --- STICKY GLASS NAV --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 800; }
+        .nav-links a { text-decoration: none; color: var(--primary); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-left: 25px; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- HERO: CREATIVE OVERLAP --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 7% 60px;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .hero-text { flex: 1; min-width: 320px; }
+        .hero-text span { font-size: 0.8rem; letter-spacing: 5px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 20px; }
+        .hero-text h1 { font-size: clamp(3rem, 8vw, 5.5rem); line-height: 1; margin-bottom: 30px; }
+        
+        .hero-img-box { 
+            flex: 1.2; 
+            min-width: 320px;
+            height: 600px; 
+            position: relative;
+        }
+        .main-hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 300px 300px 20px 20px;
+            box-shadow: 30px 30px 0px var(--pink);
+        }
+
+        /* --- CREATIVE FEATURES --- */
+        .features { padding: 100px 7%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .feat-card { padding: 40px; background: var(--white); border-radius: 20px; transition: var(--transition); border: 1px solid transparent; }
+        .feat-card:hover { border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .feat-card h3 { font-size: 1.8rem; margin-bottom: 15px; }
+
+        /* --- MENU: APPETIZING GRID --- */
+        .menu-grid {
+            padding: 100px 7%;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+        }
+        .menu-item { grid-column: span 4; position: relative; border-radius: 20px; overflow: hidden; height: 450px; cursor: pointer; }
+        .menu-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .menu-item:hover img { transform: scale(1.1); }
+        .menu-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(45,36,30,0.9), transparent);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 30px; color: white; opacity: 0; transition: 0.4s;
+        }
+        .menu-item:hover .menu-overlay { opacity: 1; }
+
+        /* Asymmetric Layout Tweaks */
+        .menu-item:nth-child(2) { grid-column: span 8; }
+        .menu-item:nth-child(3) { grid-column: span 7; }
+        .menu-item:nth-child(4) { grid-column: span 5; }
+
+        /* --- DIRECT ORDERING FORM --- */
+        .order-section { padding: 100px 7%; background: var(--primary); color: var(--white); border-radius: 60px 60px 0 0; }
+        .order-wrapper { max-width: 900px; margin: 0 auto; }
+        .form-card { background: rgba(255,255,255,0.05); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); }
+        
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .full-width { grid-column: span 2; }
+        
+        label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; opacity: 0.7; }
+        input, select, textarea {
+            width: 100%; padding: 18px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: white; font-family: inherit; font-size: 1rem; transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent); background: rgba(255,255,255,0.15); }
+
+        .btn-order {
+            width: 100%; padding: 20px; background: var(--accent); color: var(--primary);
+            border: none; border-radius: 12px; font-weight: 700; font-size: 1.1rem; 
+            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.3s;
+            margin-top: 20px;
+        }
+        .btn-order:hover { background: var(--white); transform: scale(1.02); }
+
+        /* --- FOOTER --- */
+        footer { padding: 80px 7% 40px; text-align: center; }
+        .footer-logo { font-size: 2.5rem; margin-bottom: 20px; }
+        .socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; }
+        .socials a { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.9rem; }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 1024px) {
+            .menu-item { grid-column: span 6 !important; height: 350px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { width: 95%; padding: 15px 20px; }
+            .nav-links { display: none; } /* Mobile simplicity */
+            .hero { padding-top: 120px; text-align: center; }
+            .hero-text h1 { font-size: 3.2rem; }
+            .hero-img-box { height: 400px; margin-top: 30px; }
+            .menu-item { grid-column: span 12 !important; }
+            .input-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .form-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">the_bakingbay_byvidushi</div>
+        <div class="nav-links">
+            <a href="#menu">Collection</a>
+            <a href="#order">Order Directly</a>
+            <a href="https://instagram.com/the_bakingbay_byvidushi">Instagram</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-text">
+            <span>PREMIUM • HANDCRAFTED • DELHI</span>
+            <h1>Baking Art<br>into Memories.</h1>
+            <p>Skip the DMs. Welcome to the official ordering studio of Vidushi Arya. Explore our seasonal collection and book your masterpiece below.</p>
+            <br>
+            <a href="#order" style="display: inline-block; padding: 20px 45px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 700; letter-spacing: 1px;">Start Order Request</a>
+        </div>
+        <div class="hero-img-box">
+            <img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?q=80&w=1500" class="main-hero-img" alt="Boutique Cake">
+        </div>
+    </header>
+
+    <section class="features">
+        <div class="feat-card">
+            <h3>01.</h3>
+            <p><strong>Artisanal Quality</strong><br>100% Eggless creations made with premium Belgian couverture chocolate.</p>
+        </div>
+        <div class="feat-card">
+            <h3>02.</h3>
+            <p><strong>Bespoke Design</strong><br>From minimalist Korean lunchbox cakes to grand floral tiered masterpieces.</p>
+        </div>
+        <div class="feat-card">
+            <h3>03.</h3>
+            <p><strong>Direct Booking</strong><br>No more "Price please" DMs. Order directly through our secure studio portal.</p>
+        </div>
+    </section>
+
+    <section class="menu-grid" id="menu">
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=800">
+            <div class="menu-overlay">
+                <h3>The Belgian Truffle</h3>
+                <p>Starts at ₹650</p>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=1200">
+            <div class="menu-overlay">
+                <h3>Pressed Floral Art</h3>
+                <p>Starts at ₹1200</p>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=1000">
+            <div class="menu-overlay">
+                <h3>Lotus Biscoff Dream</h3>
+                <p>Starts at ₹850</p>
+            </div>
+        </div>
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?q=80&w=1000">
+            <div class="menu-overlay">
+                <h3>Blueberry Cheesecake</h3>
+                <p>Starts at ₹900</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="order-section" id="order">
+        <div class="order-wrapper">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <h2 style="font-size: 3rem;">Place Your Order</h2>
+                <p style="opacity: 0.6;">We'll review your design and confirm the slot within 2 hours.</p>
+            </div>
+
+            <form class="form-card">
+                <div class="input-grid">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" placeholder="Vidushi Arya" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Number (WhatsApp)</label>
+                        <input type="tel" placeholder="+91 XXXXX XXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Flavor</label>
+                        <select>
+                            <option>Belgian Chocolate</option>
+                            <option>Biscoff Bliss</option>
+                            <option>Nutella Hazelnut</option>
+                            <option>Exotic Seasonal Fruit</option>
+                            <option>Baked Cheesecake</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Event</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cake Size</label>
+                        <select>
+                            <option>0.5 KG (Bento)</option>
+                            <option>1.0 KG (Standard)</option>
+                            <option>1.5 KG</option>
+                            <option>2.0 KG+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Style</label>
+                        <select>
+                            <option>Minimalist / Solid Color</option>
+                            <option>Vintage / Piping</option>
+                            <option>Floral Art</option>
+                            <option>Theme Based</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Design Notes & Message on Cake</label>
+                        <textarea rows="4" placeholder="Write the message you want on the cake and any design references..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-order">Submit Order Request</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo serif">The Baking Bay</div>
+        <p style="opacity: 0.5; margin-bottom: 30px;">Premium Home Baker Studio • Delhi, India</p>
+        <div class="socials">
+            <a href="https://instagram.com/the_bakingbay_byvidushi">INSTAGRAM</a>
+            <a href="#">YOUTUBE</a>
+            <a href="#">WHATSAPP</a>
+        </div>
+        <p style="font-size: 0.7rem; opacity: 0.4;">&copy; 2026 THE BAKING BAY STUDIO. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+</html>
